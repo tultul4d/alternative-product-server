@@ -74,6 +74,18 @@ async function run() {
 
     })
 
+
+// API endpoint to fetch queries
+app.get('http://localhost:5000/product', (req, res) => {
+  res.json(queries);
+});
+
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
+
+
+
     app.delete('/product/:id', async(req, res) =>{
       const id = req.params.id;
       console.log("plese delete ", id);
