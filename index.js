@@ -128,7 +128,7 @@ app.get('http://localhost:5000/product', (req, res) => {
     res.send(result);
   });
 
-
+// all data comment
   app.get('/commend',  async (req, res) => {
     const userId = req.user.id;
     try {
