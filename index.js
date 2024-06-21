@@ -38,7 +38,7 @@ async function run() {
        res.send(result);
     })
 
-
+// added delete
     app.get('/product/:id', async(req, res) =>{
       const id = req.params.id;
       const query = {_id: new ObjectId (id)}
@@ -105,7 +105,7 @@ app.get('http://localhost:5000/product', (req, res) => {
 // });
 
 
-
+// delete
     app.delete('/product/:id', async(req, res) =>{
       const id = req.params.id;
       console.log("plese delete ", id);
