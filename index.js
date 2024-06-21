@@ -116,7 +116,7 @@ app.get('http://localhost:5000/product', (req, res) => {
     
     
 
-  //  comment
+  //  comment 
   app.get('/commend', async(req, res) =>{
     console.log(req.query.email);
     let query = {};
@@ -140,7 +140,7 @@ app.get('http://localhost:5000/product', (req, res) => {
 });
 
 
-
+// added data
   app.post('/commend', async (req, res) => {
     const command = req.body;
     console.log(command);
