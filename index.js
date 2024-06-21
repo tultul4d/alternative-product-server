@@ -28,6 +28,7 @@ async function run() {
     
 
     const productCollection = client.db('productDB').collection('product');
+    const commendCollection = client.db('productDB').collection('commend');
 
 
 
@@ -44,6 +45,21 @@ async function run() {
       const result = await productCollection.findOne(query)
       res.send(result);
 
+    })
+
+    app.get('/product/:id', async(req, res) =>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId (id)}
+
+
+      const options = {
+        projection: { title:1, name: 1, 
+          photo: 1, 
+          reason: 1, 
+          createdAt: 1 },
+      }
+      const result = await productCollection.findOne(query, options)
+      res.send(result);
     })
 
 
@@ -66,7 +82,11 @@ async function run() {
       const updatedProducts = {
         $set: {
           name: Products.name,
+          date: Products.title,
+          brand: Products.brand,
+          reason: Products.reason,
           date: Products.date,
+        
         }
       }
       const result = await productCollection.updateOne(filter, updatedProducts, option )
@@ -95,6 +115,47 @@ app.get('http://localhost:5000/product', (req, res) => {
     })
     
     
+
+  //  comment
+  app.get('/commend', async(req, res) =>{
+    console.log(req.query.email);
+    let query = {};
+    if (req.query?.email){
+      query = {email: req.query.email}
+    }
+
+    const result = await commendCollection.find(query).toArray();
+    res.send(result);
+  });
+
+
+  app.get('/commend',  async (req, res) => {
+    const userId = req.user.id;
+    try {
+        const result = await commendCollection.find({ queryUserId: userId });
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+
+  app.post('/commend', async (req, res) => {
+    const command = req.body;
+    console.log(command);
+    const result = await commendCollection.insertOne(command);
+    res.send(result);
+  });
+
+
+
+  app.delete('/commend/:id' , async(req, res) =>{
+    const id = req.params.id;
+    const query = { _id: new ObjectId (id) }
+    const result = await commendCollection.deleteOne(query);
+    res.send(result);
+  })
 
 
 
